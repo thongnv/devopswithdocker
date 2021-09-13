@@ -1,0 +1,25 @@
+version: "3"
+
+services: 
+  frontend:
+    image: ml-frontend
+    build: ./ml-kurkkumopo-frontend
+  backend:
+    image: ml-backend
+    build: ./ml-kurkkumopo-backend
+    volumes: 
+      - model:/src/model
+    depends_on: 
+      - training
+  training:
+    image: ml-training
+    build: ./ml-kurkkumopo-training
+    volumes: 
+      - model:/src/model
+      - images:/src/imgs
+      - data:/src/data
+
+volumes: 
+  model:
+  images:
+  data:
