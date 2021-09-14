@@ -70,6 +70,7 @@ This time return the command you used to start process and the command(s) you us
     This exercise has multiple solutions, if the curl for helsinki.fi works then it’s done. Can you figure out other (smart) solutions?
 
 Command used:
+
     docker run -it ubuntu sh -c 'apt-get update; apt-get install -y curl; echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;'
 
 ## 1.5: Sizes of images
@@ -85,8 +86,11 @@ Pull both images and compare the image sizes. Go inside the alpine container and
 ![Exercise 1.2](readme-images/1.2.png)
 
 Secret message:
+
     You can find the source code here: https://github.com/docker-hy
+
 Commands:
+
     docker run -d devopsdockeruh/simple-web-service:alpine
     docker ps
     docker exec -it 9ac816a2bfbe sh
@@ -104,8 +108,11 @@ Submit the secret message and command(s) given to get it as your answer.
 
 ***Output***
 The secret message
+
     "This is the secret message"
+
 Commands
+
     docker run -it devopsdockeruh/pull_exercise
     (provide "basics" as password)
 
@@ -138,11 +145,13 @@ Running the built “web-server” image should look like this:
 
 ***Output***
 Dockerfile
+
     FFROM devopsdockeruh/simple-web-service:alpine
 
     CMD ["server"]
 
 Commands
+
      docker build . -t web-server
      docker run web-server
 
@@ -160,6 +169,7 @@ Return both Dockerfile and the command you used to run the container.
 
 ***Output***
 Dockerfile
+
     FROM ubuntu:18.04
 
     RUN apt-get update && apt-get install -y curl
@@ -173,6 +183,7 @@ Dockerfile
     ENTRYPOINT ["sh", "./curl.sh"]
 
 curl.sh
+
     #!bin/bash
 
     echo "Input website:"; 
@@ -182,6 +193,7 @@ curl.sh
     curl http://$website;
 
 Commands
+
      docker build . -t curler
      docker run -it curler
 
@@ -194,6 +206,7 @@ Image devopsdockeruh/simple-web-service creates a timestamp every two seconds to
 Submit the command you used to complete the exercise.
 
 Command
+
     touch text.log
     docker run -it -v $(pwd)/text.log:/usr/src/app/text.log devopsdockeruh/simple-web-service:alpine
 
@@ -206,6 +219,7 @@ Image devopsdockeruh/simple-web-service will start a web service in port 8080 wh
 Submit your used commands for this exercise.
 
 Commands
+
     docker run -it -p 8080:8080 web-server
 
 ## 1.11: Spring
@@ -219,7 +233,9 @@ Use openjdk image FROM openjdk:_tag_ to get java instead of installing it manual
 You’ve completed the exercise when you see a ‘Success’ message in your browser.
 
 ***Output***
+
 Dockerfile
+
     FROM openjdk:8
 
     WORKDIR /usr/src/app
@@ -229,6 +245,7 @@ Dockerfile
     CMD ["java", "-jar", "./target/docker-example-1.1.3.jar"]
 
 Commands
+
      docker build . -t spring-example
      docker run -it -p 8080:8080 spring-example
 
@@ -251,7 +268,9 @@ TIP: Note that the app starts to accept connections when “Accepting connection
 TIP: You do not have to install anything new outside containers.
 
 ***Output***
+
 Dockerfile
+
     FROM node:14
 
     WORKDIR /usr/src/app
@@ -263,6 +282,7 @@ Dockerfile
     CMD [ "npx", "serve", "-s", "-n", "-l", "5000", "build" ]
 
 Commands
+
      docker build . -t example-frontend
      docker run -it -p 5000:5000 example-frontend
 
@@ -279,7 +299,9 @@ Submit the Dockerfile and the command used.
 Do not alter the code of the project
 
 ***Output***
+
 Dockerfile
+
     FROM golang:1.16-alpine
 
     WORKDIR /usr/src/app
@@ -293,6 +315,7 @@ Dockerfile
     CMD [ "./server" ]
 
 Commands
+
      docker build . -t example-backend
      docker run -it -p 8080:8080 example-backend
 
@@ -314,7 +337,9 @@ TIP: When configuring web applications keep browser developer console ALWAYS ope
 TIP: Developer console has multiple views, most important ones are Console and Network. Exploring the Network tab can give you a lot of information on where messages are being sent and what is received as response!
 
 ***Output***
+
 Dockerfile example-backend
+
     FROM golang:1.16-alpine
 
     WORKDIR /usr/src/app
@@ -329,6 +354,7 @@ Dockerfile example-backend
     CMD [ "./server" ]
 
 Dockerfile example-frontend
+
     FROM node:14
 
     WORKDIR /usr/src/app
@@ -351,7 +377,9 @@ Create a docker-compose.yml file that starts devopsdockeruh/simple-web-service a
 Submit the docker-compose.yml, make sure that it works simply by running docker-compose up if the log file exists.
 
 ***Output***
+
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -372,6 +400,7 @@ Create a docker-compose.yml and use it to start the service so that you can use 
 Submit the docker-compose.yml, make sure that it works simply by running docker-compose up
 
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -394,6 +423,7 @@ Configure the backend and frontend from part 1 to work in docker-compose.
 Submit the docker-compose.yml
 
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -407,6 +437,7 @@ docker-compose.yml
               - 8080:8080
 
 ## 2.4
+
 Add redis to example backend.
 
 Redis is used to speed up some operations. Backend uses a slow api to get information. You can test the slow api by requesting /ping?redis=true with curl. The frontend program has a button to test this.
@@ -423,6 +454,7 @@ restart: unless-stopped can help if the redis takes a while to get ready
 TIP: If you’re stuck check out tips and tricks
 
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -448,6 +480,7 @@ This exercise was created with Sasu Mäkinen
 Please return the used commands for this exercise.
 
 ***Output***
+
     docker-compose up --scale compute=2
 
 ## 2.6
@@ -466,7 +499,9 @@ TIP: When configuring the database, you might need to destroy the automatically 
 restart: unless-stopped can help if the postgres takes a while to get ready
 
 ***Output***
+
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -497,8 +532,11 @@ Note that the training requires 2 volumes and backend should share volume /src/m
 The frontend will display on http://localhost:3000 and the application will tell if the subject of an image looks more like a cucumber or a moped.
 
 Submit the docker-compose.yml
+
 ***Output***
+
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -562,8 +600,11 @@ Submit the docker-compose.yml
 Tips for making sure the backend connection works:
 Try using your browser to access http://localhost/api/ping and see if it answers pong
 It might be nginx configuration problem: Add trailing / to the backend url in the nginx.conf.
+
 ***Output***
+
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -588,6 +629,7 @@ docker-compose.yml
               - ./nginx.conf:/etc/nginx/nginx.conf
 
 nginx.conf
+
     events { worker_connections 1024; }
 
     http {
@@ -604,7 +646,9 @@ nginx.conf
             }
         }
     }
+
 note: update the BACKEND_URL for frontend Dockerfile:
+
     ENV REACT_APP_BACKEND_URL=http://localhost/api/
 
 ## 2.9
@@ -623,8 +667,11 @@ Maybe it would be simpler to back them up now that you know where they are.
 TIP: To save you the trouble of testing all of those steps, just look into the folder before trying the steps. If it’s empty after docker-compose up then something is wrong.
 TIP: Since you may have broken the buttons in nginx exercise you should test with docker-compose.yml from before it
 Submit the docker-compose.yml
+
 ***Output***
+
 docker-compose.yml
+
     version: "3"
 
     services: 
@@ -697,8 +744,11 @@ Security issues with the user being a root are serious for the example frontend 
 Make sure the containers start their processes as a non-root user.
 
 TIP man chown may help you if you have access errors
+
 ***Output***
+
 frontend
+
     FROM node:14
 
     WORKDIR /usr/src/app
@@ -715,6 +765,7 @@ frontend
     CMD [ "serve", "-s", "-l", "5000", "build" ]
 
 backend
+
     FROM golang:1.16-alpine
 
     WORKDIR /usr/src/app
@@ -741,7 +792,9 @@ Return back to our frontend & backend Dockerfiles and you should see the some mi
 Document both image sizes at this point, as was done in the material. Optimize the Dockerfiles of both programs, frontend and backend, by joining the RUN commands and removing useless parts.
 
 After your improvements document the image sizes again. The size difference may not be very much yet. The frontend should be around 432MB when using FROM ubuntu:18.04. The backend should be around 351MB. The sizes may vary.
+
 ***Output***
+
     example-frontend                             latest    05069608fcf2   4 hours ago    479MB
     example-backend                              latest    0968c3754548   4 hours ago    455MB
 
@@ -756,10 +809,14 @@ Return back to our frontend & backend Dockerfiles and change the FROM to somethi
 Document the size after your changes.
 
 ***Output***
+
 with FROM golang and FROM node
+
     example-backend                              latest    b5e01d55acf3   6 hours ago    951MB
     example-frontend                             latest    32b136865bf7   6 hours ago    1.12GB
+
 ... with alpine version
+
     example-backend                              latest      0968c3754548   12 hours ago    455MB
     example-frontend                             latest      c4ce7d10666e   3 minutes ago   344MB
 
@@ -772,6 +829,7 @@ Even though multi-stage builds are designed mostly for binaries in mind, we can 
 You can still use the serve to serve the static files or try out something else.
 
 frontend dockerfile
+
     FROM node:14-alpine as builder
 
     WORKDIR /usr/src/app
@@ -785,7 +843,9 @@ frontend dockerfile
 
     FROM nginx:1.19-alpine
     COPY --from=builder /usr/src/app/build/ /usr/share/nginx/html
+
 nginx.conf
+
     events { worker_connections 1024; }
 
     http {
@@ -804,6 +864,7 @@ nginx.conf
     }
 
 image size
+
     example-frontend                             latest      742c79f07f46   36 minutes ago       22.4MB
 
 ## 3.6: Multi-stage backend
@@ -815,6 +876,7 @@ The project is in golang and building a binary that runs in a container, while s
 To pass the exercise the image must be smaller than 25MB.
 
 Dockerfile
+
     FROM golang:1.16-alpine as builder
 
     WORKDIR /usr/app
@@ -840,5 +902,5 @@ Dockerfile
     CMD [ "./server" ]
 
 image size
-    example-backend                              latest      2972929cda79   About a minute ago   17MB
 
+    example-backend                              latest      2972929cda79   About a minute ago   17MB
