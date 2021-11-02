@@ -36,8 +36,11 @@ Submit the secret message and command(s) given as your answer.
 
 ***Output***
 Secret message:
-    You can find the source code here: https://github.com/docker-hy
+
+    You can find the source code here: https://github.com/docker-hy\
+
 Commands:
+
     docker run -d devopsdockeruh/simple-web-service:ubuntu
     docker ps
     docker exec -it 79b21f53100f bash
